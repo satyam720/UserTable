@@ -85,14 +85,16 @@ const HomePage = () => {
     //get user Row and delete
     const [selectionModel, setSelectionModel] = useState([]);
 
-    console.log("selfdajslkfjlasdlfj", selectionModel);
+    console.log("Accessed User ROw", selectionModel);
     
     const Delete = async() => {
-        await axios.delete(`https://jsonplaceholder.typicode.com/users/${selectionModel}`)
+        await axios.delete(`https://jsonplaceholder.typicode.com/users/${selectionModel[0]}`)
         .then((res) => {
             console.log("Deleted Data", res);
+            // selectionModel.map((indice ) => setData(data.filter((item) => (item.id !== indice))));
             setData(data.filter((item) => (item.id !== selectionModel[0])));
-            data.filter((item) => (console.log("THi is fjda;flksjadflafldkjs",item.id)));
+            
+            // data.filter((item) => (console.log("THi is fjda;flksjadflafldkjs",item.id)));
         })
         .catch((err) => console.log(err));
     }
