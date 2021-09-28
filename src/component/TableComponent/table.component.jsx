@@ -1,6 +1,7 @@
 import {DataGrid} from '@material-ui/data-grid';
 import { Typography } from '@material-ui/core';
 
+
 const columns = [
     {field: 'id', headerName: 'ID'},
     {field: 'name', headerName: 'Name',width: 200,},
@@ -8,10 +9,13 @@ const columns = [
     {field: 'email', headerName: 'Email',width: 200},
     {field: 'phone', headerName: 'Phone',width: 200},
     {field: 'website', headerName: 'Website',width: 200},
-]
+];
 
-const TableComponent = ({data}) => {
 
+
+const TableComponent = ({data,selectionModel,setSelectionModel}) => {
+
+    
     
 
 
@@ -27,6 +31,10 @@ const TableComponent = ({data}) => {
                 columns = {columns}
                 pageSize={5}
                 checkboxSelection
+                onSelectionModelChange={(newSelectionModel) => {
+                    setSelectionModel(newSelectionModel);
+                }}
+                selectionModel={selectionModel}
             />      
 
        </div>

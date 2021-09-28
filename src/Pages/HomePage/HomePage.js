@@ -1,4 +1,4 @@
-import { useState,useEffect,useRef  } from "react";
+import { useState,useEffect,useRef } from "react";
 import './HomePage.css';
 import axios from "axios";
 import TableComponent from "../../component/TableComponent/table.component";
@@ -8,8 +8,6 @@ import Box from '@mui/material/Box';
 import { Typography,
         TextField,
         Grid,
-        styled,
-        Paper,
         Button } from '@material-ui/core';
 import {AddCircleOutlined} from '@material-ui/icons'
 
@@ -27,12 +25,12 @@ const style = {
     p: 3,
   };
 
-  const Item = styled(Paper)(({ theme }) => ({
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
+//   const Item = styled(Paper)(({ theme }) => ({
+//     ...theme.typography.body2,
+//     padding: theme.spacing(1),
+//     textAlign: 'center',
+//     color: theme.palette.text.secondary,
+//   }));
 
 
 
@@ -50,38 +48,58 @@ const HomePage = () => {
         setOpen(true)};
     const handleClose = () => setOpen(false);
 
-    //Add user functions
-    const valueRef = useRef('');
+    //Add user functions  and states   
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
+    const [website, setWebsite] = useState('');
 
-    
-    const sendValue = () => {
-        return console.log(valueRef.current.value) //on clicking button accesing current value of TextField and outputing it to console 
-    }
 
-    const initialState = {
-        name: '',
-        username: '',
-        email: '',
-        phone: '',
-        website: '',
-    }
-    const [addData, setAddData] = useState(initialState);
+   const submitData = async() => {
+       await axios.post("https://jsonplaceholder.typicode.com/users", {
+           name: name,
+           username: username,
+           email: email,
+           phone: phone,
+           website: website
+       })
+       .then((res) => {
+           console.log(res.data);
+           setData([...data, res.data]);
+       })
+       .catch((err) => {
+           console.log(err);
+       })
+   };
 
-    const handleChange = (event) => {
-        // event.persist();
-        // setAddData(addData => ({...addData, addData.name : event.target.value}));
-        console.log('check', event.nativeEvent.data);
-    }
+   
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
+        await submitData();
         
         setOpen(false);
     };
 
+    //get user Row and delete
+    const [selectionModel, setSelectionModel] = useState([]);
 
+    console.log("selfdajslkfjlasdlfj", selectionModel);
+    
+    const Delete = async() => {
+        await axios.delete(`https://jsonplaceholder.typicode.com/users/${selectionModel}`)
+        .then((res) => {
+            console.log("Deleted Data", res);
+            setData(data.filter((item) => (item.id !== selectionModel[0])));
+            data.filter((item) => (console.log("THi is fjda;flksjadflafldkjs",item.id)));
+        })
+        .catch((err) => console.log(err));
+    }
+
+
+    //Get Data from JSON PLACEHOLDER API AND SET DATA ON EVERY CHANGE
     useEffect(() => {
-       
         const fetchData = async() =>{
             await axios
             .get("https://jsonplaceholder.typicode.com/users")
@@ -92,6 +110,7 @@ const HomePage = () => {
             })
             .catch((err) => console.log(err));
         }
+      
 
         fetchData();
         
@@ -105,6 +124,8 @@ const HomePage = () => {
                 <div className= "col">
                     <TableComponent 
                     data = {data}
+                    selectionModel={selectionModel}
+                    setSelectionModel={setSelectionModel}
                     />
                 </div>
         
@@ -113,6 +134,10 @@ const HomePage = () => {
                 <CustomButton 
                  handleOpen={handleOpen}
                 />
+                <Button type='submit' onClick={Delete}>               
+                 Delete Selected User
+                </Button>
+                
                  <Modal
                 
                  open={open}
@@ -127,22 +152,22 @@ const HomePage = () => {
 
                 <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid item className='mb-3' xs={6}>
-                <TextField inputRef={valueRef} id="name" label="name" variant="outlined" />                
+                <TextField value = {name} onChange={(e) => setName(e.target.value)} id="name" label="name" variant="outlined" />                
                 </Grid>
                 <Grid item className='mb-3' xs={6}>
-                <TextField  id="username" label="username" variant="outlined" />
+                <TextField  value = {username} onChange={(e) => setUsername(e.target.value)} id="username" label="username" variant="outlined" />
                 </Grid>
                 <Grid item className='mb-3' xs={6}>
-                <TextField  id="email" label="email" variant="outlined" />                
+                <TextField  value = {email} onChange={(e) => setEmail(e.target.value)} id="email" label="email" variant="outlined" />                
                 </Grid>
                 <Grid item xs={6}>
-                <TextField  id="phone" label="phone" variant="outlined" />                
+                <TextField  value = {phone} onChange={(e) => setPhone(e.target.value)} id="phone" label="phone" variant="outlined" />                
                 </Grid>
                 <Grid item xs={6}>
-                <TextField  id="website" label="website" variant="outlined" />                
+                <TextField value = {website} onChange={(e) => setWebsite(e.target.value)} id="website" label="website" variant="outlined" />                
                 </Grid>
                 
-                   
+                
                                
                 </Grid>
                 <Button type='submit'
@@ -150,6 +175,8 @@ const HomePage = () => {
                 style={{marginLeft: '40%', marginTop: "2%"}}>
                 <AddCircleOutlined /> Add User
                 </Button>
+
+                
                
                 </Box>
                     
