@@ -27,14 +27,9 @@ const TableComponent = ({data}) => {
                 columns = {columns}
                 pageSize={5}
                 checkboxSelection
-            />
-        
+            />      
 
-       
-            
-
-      
-        </div>
+       </div>
         
         )
 };
