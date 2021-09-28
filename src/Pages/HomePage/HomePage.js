@@ -1,5 +1,5 @@
 import { useState,useEffect  } from "react";
-import TableComponent from "../component/TableComponent/table.component";
+import TableComponent from "../../component/TableComponent/table.component";
 import axios from "axios";
 
 
@@ -7,13 +7,7 @@ import axios from "axios";
 const HomePage = () => {
 
 
-    // const initialState = {
-    // name: "", 
-    // username: "",
-    // email: "",
-    // phone: "",
-    // website: "",
-    // }
+   
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -35,10 +29,16 @@ const HomePage = () => {
     },[setData]);
 
     return(
-        <div>
-            <TableComponent 
+        <div className="container-fluid">
+        <div className= "row">
+        <div className= "col">
+        <TableComponent 
                 data = {data}
             />
+        </div>
+        
+        </div>
+            
         </div>)
 };
 

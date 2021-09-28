@@ -16,16 +16,22 @@ const TableComponent = ({data}) => {
 
 
     return(
-        <div style={{height: 700, width: "100%"}}>
-             <Typography className='pb-4' variant="h6" id="tableTitle" component="div">
+        <div className="container-fluid" style={{height: 400 , width: "100%"}}>
+        
+        
+        <Typography className='pb-4' variant="h6" id="tableTitle" component="div">
                 Users Table
             </Typography>
             <DataGrid 
                 rows = {data}
                 columns = {columns}
-                pageSize={10}
+                pageSize={5}
                 checkboxSelection
             />
+        
+
+       
+            
 
       
         </div>
