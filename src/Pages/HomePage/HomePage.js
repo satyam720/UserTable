@@ -31,7 +31,7 @@ const HomePage = () => {
   //Modal States and functions
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
-    console.log("i am opened");
+    // console.log("i am opened");
     setOpen(true);
   };
   const handleClose = () => setOpen(false);
@@ -117,8 +117,8 @@ const HomePage = () => {
     await axios
       .get(`https://jsonplaceholder.typicode.com/users/${selectionModel[0]}`)
       .then((res) => {
-        console.log("This is the data to be edited", res.data);
-        console.log("perform edition on this data", data);
+        // console.log("This is the data to be edited", res.data);
+        // console.log("perform edition on this data", data);
         setName(res.data.name);
         setUsername(res.data.username);
         setEmail(res.data.email);
@@ -179,7 +179,7 @@ const HomePage = () => {
         website: website,
       })
       .then((res) => {
-        console.log("Updated Data", res);
+        // console.log("Updated Data", res);
         setData([...data, res.data]);
         toast.success("User Updated Successfully", {
           position: toast.POSITION.TOP_CENTER,
@@ -202,8 +202,8 @@ const HomePage = () => {
         .get("https://jsonplaceholder.typicode.com/users")
         .then((res) => {
           setData(res.data);
-          console.log("THis is the result from endpoint ====>>>>", res.data);
-          console.log("THis is the data now", data);
+        //   console.log("THis is the result from endpoint ====>>>>", res.data);
+        //   console.log("THis is the data now", data);
         })
         .catch((err) => console.log(err));
     };
