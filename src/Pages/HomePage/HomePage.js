@@ -9,7 +9,9 @@ import { Typography,
         TextField,
         Grid,
         Button } from '@material-ui/core';
-import {AddCircleOutlined} from '@material-ui/icons'
+import {AddCircleOutlined,
+        PublishOutlined,
+        CloudUpload} from '@material-ui/icons'
 
 
 const style = {
@@ -100,6 +102,41 @@ const HomePage = () => {
     }
 
 
+    //get user row-- edit and update user
+    const [editflag, setEditFlag] = useState(0);
+
+    const handleOpen1 = () => {
+        console.log("i am opened");
+        setEditFlag(editflag+1);
+        setOpen(true)};
+
+    const handleClose1 = () => {
+        setEditFlag(editflag-1);
+        setOpen(false);
+    }
+
+    const Update = async() => {
+        await axios.put(`https://jsonplaceholder.typicode.com/users/${selectionModel[0]}`, {
+            name: name,
+            username: username,
+            email: email,
+            phone: phone,
+            website: website})
+        .then((res) => {
+            console.log("Updated Data", res);
+            setData([...data, res.data]);            
+        })
+        .catch((err) => console.log(err));
+    }
+
+    const handleSubmit1 = async(e) => {
+        e.preventDefault();
+        await Update();
+        setEditFlag(editflag-1);
+        setOpen(false);
+    };
+
+
     //Get Data from JSON PLACEHOLDER API AND SET DATA ON EVERY CHANGE
     useEffect(() => {
         const fetchData = async() =>{
@@ -139,11 +176,15 @@ const HomePage = () => {
                 <Button type='submit' onClick={Delete}>               
                  Delete Selected User
                 </Button>
+
+                <Button type='submit' onClick={handleOpen1}>               
+                 Edit Selected User                
+                </Button>
                 
                  <Modal
                 
                  open={open}
-                 onClose={handleClose}
+                 onClose={editflag===1 ? handleClose1 : handleClose}
                  aria-labelledby="modal-modal-title"
                  aria-describedby="modal-modal-description"
                 >
@@ -172,12 +213,22 @@ const HomePage = () => {
                 
                                
                 </Grid>
-                <Button type='submit'
+
+                {editflag===1 ? 
+                
+                (<Button type='submit'
+                onClick={(e) => handleSubmit1(e)}
+                style={{marginLeft: '40%', marginTop: "2%"}}>
+                <CloudUpload /> Update User
+                </Button>) 
+                
+                : 
+                
+                (<Button type='submit'
                 onClick={(e) => handleSubmit(e)}
                 style={{marginLeft: '40%', marginTop: "2%"}}>
                 <AddCircleOutlined /> Add User
-                </Button>
-
+                </Button>)}               
                 
                
                 </Box>

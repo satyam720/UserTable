@@ -9,6 +9,7 @@ const columns = [
     {field: 'email', headerName: 'Email',width: 200},
     {field: 'phone', headerName: 'Phone',width: 200},
     {field: 'website', headerName: 'Website',width: 200},
+    
 ];
 
 
@@ -20,7 +21,7 @@ const TableComponent = ({data,selectionModel,setSelectionModel}) => {
 
 
     return(
-        <div className="container-fluid" style={{height: 400 , width: "100%"}}>
+        <div className="container-fluid" style={{height: 400 , width: "88%"}}>
         
         
         <Typography className='pb-4' variant="h6" id="tableTitle" component="div">
