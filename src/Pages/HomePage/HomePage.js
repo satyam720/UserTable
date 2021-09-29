@@ -226,6 +226,7 @@ const HomePage = () => {
         <div className="row check" style={{ marginLeft: "20%" }}>
           <div className="col-lg-2 col-md-3 col-sm-3 check1">
             <Button
+              color="primary"
               variant="contained"
               className=""
               type="submit"
@@ -236,7 +237,7 @@ const HomePage = () => {
           </div>
 
           <div className="col-lg-3 col-md-3 col-sm-3 check2">
-            <Button variant="contained" type="submit" onClick={Delete}>
+            <Button  variant="contained" type="submit" onClick={Delete}>
               Delete Selected User
             </Button>
           </div>
